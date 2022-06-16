@@ -1,0 +1,167 @@
+<div class="card">
+    <div class="card-header">
+        <h3>Conversor de Divisas - RAPIDAPI</h3>
+    </div>
+
+    <div class="container col-8 mx-auto my-3">
+        <form #convertForm="ngForm">
+            <div class="mb-3">
+                <label for="valor" class="form-label">Valor</label>
+                <input type="text" class="form-control" id="valor" name="valor" [(ngModel)]="value"
+                    #valor="ngModel" required>
+
+                <div *ngIf="valor.invalid" class="alert-danger my-1 p-1">
+                    <div *ngIf="valor.errors?.['required']">
+                        Por favor escriba un valor numérico
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="de" class="form-label">De</label>
+                <select class="form-select" aria-label="Default select example" id="de" name="de" [(ngModel)]="from"
+                    #de="ngModel" required>
+                    <option value="ARS">ARS</option>
+                    <option value="USD">USD</option>
+                    <option value="EUR">EUR</option>
+                </select>
+
+                <div *ngIf="de.invalid" class="alert-danger my-1 p-1">
+                    <div *ngIf="de.errors?.['required']">
+                        Por favor seleccione una moneda
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="a" class="form-label">A</label>
+                <select class="form-select" aria-label="Default select example" id="a" name="a" [(ngModel)]="to"
+                     #a="ngModel" required>
+                    <option value="ARS">ARS</option>
+                    <option value="USD">USD</option>
+                    <option value="EUR">EUR</option>
+                </select>
+
+                <div *ngIf="a.invalid" class="alert-danger my-1 p-1">
+                    <div *ngIf="a.errors?.['required']">
+                        Por favor seleccione una moneda
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" [(ngModel)]="transaccion.emailCliente"
+                    #email="ngModel" required>
+
+                <div *ngIf="a.invalid" class="alert-danger my-1 p-1">
+                    <div *ngIf="a.errors?.['required']">
+                        Por favor escriba su email
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-grid gap-2">
+                <button class="btn btn-primary" type="button" (click)="convertir()" [disabled]="!convertForm.valid">
+                    Convertir
+                </button>
+            </div>
+            <br>
+            <div class="mb-3">
+                <label for="valor" class="form-label">Resultado</label>
+                <input class="form-control" type="text" value="{{resultado}}" aria-label="Disabled input example"
+                    disabled readonly>
+            </div>
+        </form>
+    </div>
+</div>
+<br>
+<div class="card">
+    <div class="card-header">
+        <h3>Conversor de Divisas - BACKEND</h3>
+    </div>
+
+    <div class="container col-8 mx-auto my-3">
+        <form #transaccionForm="ngForm">
+            <div class="mb-3">
+                <label for="valor" class="form-label">Valor</label>
+                <input type="text" class="form-control" id="valor" name="valor" [(ngModel)]="transaccion.cantidadOrigen"
+                    #valor="ngModel" required min="0.1">
+
+                <div *ngIf="valor.invalid" class="alert-danger my-1 p-1">
+                    <div *ngIf="valor.errors?.['required']">
+                        Por favor escriba un valor numérico
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="de" class="form-label">De</label>
+                <select class="form-select" aria-label="Default select example" id="de" name="de" [(ngModel)]="transaccion.monedaOrigen"
+                    #de="ngModel" required>
+                    <option value="ARS">ARS</option>
+                    <option value="USD">USD</option>
+                    <option value="EUR">EUR</option>
+                </select>
+
+                <div *ngIf="de.invalid" class="alert-danger my-1 p-1">
+                    <div *ngIf="de.errors?.['required']">
+                        Por favor seleccione una moneda
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="a" class="form-label">A</label>
+                <select class="form-select" aria-label="Default select example" id="a" name="a" [(ngModel)]="transaccion.monedaDestino"
+                     #a="ngModel" required>
+                    <option value="ARS">ARS</option>
+                    <option value="USD">USD</option>
+                    <option value="EUR">EUR</option>
+                </select>
+
+                <div *ngIf="a.invalid" class="alert-danger my-1 p-1">
+                    <div *ngIf="a.errors?.['required']">
+                        Por favor seleccione una moneda
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="tasa" class="form-label">Tasa de Conversión</label>
+                <input type="text" class="form-control" id="tasa" name="tasa" [(ngModel)]="transaccion.tasaConversion"
+                    #tasa="ngModel" required min="0.1">
+
+                <div *ngIf="tasa.invalid" class="alert-danger my-1 p-1">
+                    <div *ngIf="tasa.errors?.['required']">
+                        Por favor escriba la tasa da conversión
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" [(ngModel)]="transaccion.emailCliente"
+                    #email="ngModel" required>
+
+                <div *ngIf="a.invalid" class="alert-danger my-1 p-1">
+                    <div *ngIf="a.errors?.['required']">
+                        Por favor escriba su email
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-grid gap-2">
+                <button class="btn btn-primary" type="button" (click)="crearTransaccion()" [disabled]="!convertForm.valid">
+                    Convertir
+                </button>
+            </div>
+            <br>
+            <div class="mb-3">
+                <label for="valor" class="form-label">Resultado</label>
+                <input class="form-control" type="text" value="{{transaccion.cantidadDestino}}" aria-label="Disabled input example"
+                    disabled readonly>
+            </div>
+        </form>
+    </div>
+</div>

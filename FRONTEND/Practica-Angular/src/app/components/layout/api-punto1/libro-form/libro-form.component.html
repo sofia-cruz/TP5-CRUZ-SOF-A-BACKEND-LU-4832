@@ -1,0 +1,70 @@
+<div class="card">
+    <div class="card-header">
+        <h3>Registrar un Libro</h3>
+  </div>
+
+<div class="container col-8 mx-auto my-3">
+<form #libroForm="ngForm">
+    <div class="mb-3">
+        <label for="titulo" class="form-label">Título</label>
+        <input type="text" class="form-control" name="titulo" id="titulo" [(ngModel)]="libro.titulo" #titulo="ngModel" required>
+
+        <div *ngIf="titulo.invalid" class="alert-danger my-1 p-1">
+            <div *ngIf="titulo.errors?.['required']">
+                Por favor ingrese un Titulo
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label for="descripcion" class="form-label">Descripción</label>
+        <input type="text" class="form-control" name="descripcion" id="descripcion" [(ngModel)]="libro.descripcion"
+        #descipcion="ngModel" required>
+
+        <div *ngIf="descipcion.invalid" class="alert-danger my-1 p-1">
+            <div *ngIf="descipcion.errors?.['required']">
+                Por favor ingrese una Descripción
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label for="imagen" class="form-label">URL Imágen</label>
+        <input type="text" class="form-control" name="imagen" id="imagen" [(ngModel)]="libro.imagen" #imagen="ngModel" required>
+
+        <div *ngIf="imagen.invalid" class="alert-danger my-1 p-1">
+            <div *ngIf="imagen.errors?.['required']">
+                Por favor ingrese la URL de la Imágen
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label for="stock" class="form-label">Stock</label>
+        <input type="number" class="form-control" name="stock" id="stock" [(ngModel)]="libro.stock" #stock="ngModel" required min="1">
+
+        <div *ngIf="stock.invalid" class="alert-danger my-1 p-1">
+            <div *ngIf="stock.errors?.['required']">
+                Por favor ingrese el Stock
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <div class="form-check">
+            <label class="form-check-label" for="destacado">
+                Destacado
+            </label>
+            <input class="form-check-input" [(ngModel)]="libro.destacado" type="checkbox" id="destacado"
+                name="destacado" value="true">
+        </div>
+    </div>
+
+    <div class="d-grid gap-2">
+        <button class="btn btn-primary" type="button" (click)="guardarLibro()" [disabled]="libroForm.form.invalid">
+            Guardar
+        </button>
+    </div>
+</form>
+</div>
+</div>

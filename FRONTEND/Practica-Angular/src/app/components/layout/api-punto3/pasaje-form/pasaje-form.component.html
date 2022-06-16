@@ -1,0 +1,119 @@
+<div class="card">
+    <div class="card-header">
+        <h3 *ngIf="accion == 'new' && display == true">Registrar Pasaje</h3>
+        <h3 *ngIf="accion == 'update' && display == true">Editar Pasaje</h3>
+  </div>
+<div class="container col-8 mx-auto my-3">
+    <form #pasajeForm="ngForm">
+        <div class="mb-3">
+            
+            <label for="precio" class="form-label">Precio</label>
+            <input class="form-control" type="number" name="precio" id="precio" [(ngModel)]="pasaje.precioPasaje" 
+                #precio="ngModel" required min="1">
+            
+            <div *ngIf="precio.invalid" class="alert alert-danger my-1 p-1">
+                <div *ngIf="precio.errors?.['required']">
+                    Por favor Ingrese un Precio
+                </div>
+                <div *ngIf="precio.errors?.['min']">
+                    El precio debe ser mayor o igual a 1
+                </div>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="cateogira" class="form-label">Categoria</label>
+            <select class="form-select" name="categoria" id="categoria" [(ngModel)]="pasaje.categoriaPasajero"
+                #categoria="ngModel" required>
+                <option value="m">Menor</option>
+                <option value="a">Adulto</option>
+                <option value="j">Jubilado</option>
+            </select>
+            
+            <div *ngIf="categoria.invalid" class="alert alert-danger my-1 p-1">
+                <div *ngIf="categoria.errors?.['required']">
+                    Por favor seleccione una Categoría
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="fecha" class="form-label">Fecha de Compra</label>
+            <input type="date" class="form-control" name="fecha" id="fecha" [(ngModel)]="pasaje.fechaCompra" #fecha="ngModel" required>
+    
+            <div *ngIf="fecha.invalid" class="alert alert-danger my-1 p-1">
+                <div *ngIf="fecha.errors?.['required']">
+                    Por favor seleccione una Fecha
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="pasajero" class="form-label">Pasajero</label>
+            <select [(ngModel)]="pasaje.pasajero" name="pasajero" class="form-select" id="pasajero"
+                #pasajero="ngModel" required [disabled]="accion == 'update' && display == true">
+                <option *ngFor="let persona of personas" [ngValue]="persona">{{persona.apellido | titlecase}} {{persona.nombre |
+                    titlecase}}, DNI {{persona.nro_documento}}, {{persona.email}}</option>
+            </select>
+            
+            <div *ngIf="pasajero.invalid" class="alert alert-danger my-1 p-1">
+                <div *ngIf="pasajero.errors?.['required']">
+                    Por favor seleccione un Pasajero
+                </div>
+            </div>
+        </div>
+
+        <div class="d-grid gap-2">
+            <button type="button" class="btn btn-primary" (click)="guardarPasaje()"
+                [disabled]="pasajeForm.form.invalid" *ngIf="accion == 'new' && display == true" >Guardar</button>
+        </div>
+
+        <div class="d-grid gap-2" *ngIf="accion == 'update' && display == true">
+            <button class="btn btn-primary" type="button" (click)="editarPasaje()">Actualizar</button>
+            <button class="btn btn-secondary" type="button" (click)="cancelar()">Cancelar</button>
+        </div>
+    </form>
+</div>
+</div>
+
+<!--<div class="container col-8 mx-auto my-3">
+<div class="mb-3">
+    <label for="precio" class="form-label">Precio</label>
+    <input type="number" class="form-control" name="precio" id="precio" [(ngModel)]="pasaje.precioPasaje"
+       required min="1">
+</div>
+
+<div class="mb-3">
+    <label for="categoria" class="form-label">Categoría</label>
+    <select class="form-select" aria-label="Default select example" name="categoria" id="categoria" [(ngModel)]="pasaje.categoriaPasajero" required>
+        <option value="m">Menor</option>
+        <option value="a">Adulto</option>
+        <option value="j">Jubilado</option>
+    </select>
+</div>
+
+<div class="mb-3">
+    <label for="fecha" class="form-label">Fecha de Compra</label>
+    <input type="date" class="form-control" name="fecha" id="fecha" [(ngModel)]="pasaje.fechaCompra" required />
+</div>
+
+<div class="mb-3">
+<label for="pasajero" class="form-label">Pasajero</label>
+<select class="form-select" aria-label="Default select example" [(ngModel)]="pasaje.pasajero" *ngIf="accion == 'new' && display == true" name="pasajero" class="form-select" id="pasajero"
+> 
+    <option *ngFor="let persona of personas" [ngValue]="persona">{{persona.apellido | titlecase}} {{persona.nombre |
+        titlecase}}, {{persona.nro_documento}}, {{persona.email}}</option>
+</select>
+
+
+<select class="form-select" aria-label="Default select example" [(ngModel)]="pasaje.pasajero" *ngIf="accion == 'update' && display == true" disabled >
+    <option *ngFor="let persona of personas" [ngValue]="persona">{{persona.apellido | titlecase}} {{persona.nombre |
+        titlecase}}, {{persona.nro_documento}}, {{persona.email}}</option>
+</select>
+</div>
+
+<div class="d-grid gap-2">
+    <button class="btn btn-primary" type="button" (click)="guardarPasaje()" *ngIf="accion == 'new' && display == true" >Guardar</button>
+    <button class="btn btn-primary" type="button" (click)="editarPasaje()" *ngIf="accion == 'update' && display == true">Actualizar</button>
+    <button class="btn btn-secondary" type="button" (click)="cancelar()" *ngIf="accion == 'update' && display == true">Cancelar</button>
+</div>
+</div>-->

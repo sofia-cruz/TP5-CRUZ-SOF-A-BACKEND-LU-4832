@@ -1,0 +1,55 @@
+<h3>Pasajes</h3>
+<button type="button" class="btn btn-primary" (click)="crearPasaje()">Agregar</button>
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Precio</th>
+                <th scope="col">Categoría</th>
+                <th scope="col">Fecha de Compra</th>
+                <th scope="col">Pasajero</th>
+                <th scope="col">Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <ng-container *ngIf="pasajes.length != 0">
+            <tr *ngFor="let pasaje of pasajes">
+                <td>{{pasaje.precioPasaje | currency}}</td>
+                <td>{{pasaje.categoriaPasajero | category}}</td>
+                <td>{{pasaje.fechaCompra}}</td>
+                <td>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><b>Apellido y Nombre:</b> {{pasaje.pasajero.apellido}}
+                            {{pasaje.pasajero.nombre}}</li>
+                        <li class="list-group-item"><b>DNI:</b> {{pasaje.pasajero.nro_documento}}</li>
+                        <li class="list-group-item"><b>Email:</b> {{pasaje.pasajero.email}}</li>
+                    </ul>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-danger" (click)="borrarPasaje(pasaje)">Borrar</button>
+                    <button type="button" class="btn btn-secondary" (click)="editarPasaje(pasaje)">Editar</button>
+                </td>
+            </tr>
+            </ng-container>
+
+            <ng-container *ngIf="pasajes.length == 0">
+                <tr>
+                    <td colspan="5" class="text-center">Aún no hay pasajes guardados</td>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
+</div>
+
+<h5>Filtrar según Categoría</h5>
+<div class="mb-3">
+    <select class="form-select" aria-label="Default select example" [(ngModel)]="categoria"
+        name="categoria" id="categoria">
+        <option value="m">Menor</option>
+        <option value="a">Adulto</option>
+        <option value="j">Jubilado</option>
+    </select></div>
+<div class="d-grid gap-2">
+    <button class="btn btn-primary" type="button" (click)="recuperarFiltro()">Filtrar</button>
+    <button class="btn btn-secondary" type="button" (click)="clear()">Limpiar</button>
+</div>

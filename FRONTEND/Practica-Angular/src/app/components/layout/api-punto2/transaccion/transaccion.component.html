@@ -1,0 +1,122 @@
+<h3>Recuperar Transacciones</h3>
+<br>
+<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" (click)="recuperarTodos()">
+    <label class="btn btn-outline-primary" for="btnradio1">Recuperar Todos</label>
+
+    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" (click)="changeOption()">
+    <label class="btn btn-outline-primary" for="btnradio2">Recuperar Por Filtro</label>
+</div>
+<br>
+<br>
+<div class="table-responsive" *ngIf="option1 == true && display == true">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Cantidad Origen</th>
+                <th scope="col">Moneda Origen</th>
+                <th scope="col">Cantidad Destino</th>
+                <th scope="col">Moneda Destino</th>
+                <th scope="col">Tasa Conversion</th>
+                <th scope="col">Email Cliente</th>
+            </tr>
+        </thead>
+        <tbody>
+            <ng-container *ngIf="transacciones.length != 0">
+                <tr *ngFor="let transaccion of transacciones">
+                    <td>{{transaccion.cantidadOrigen}}</td>
+                    <td>{{transaccion.monedaOrigen}}</td>
+                    <td>{{transaccion.cantidadDestino}}</td>
+                    <td>{{transaccion.monedaDestino}}</td>
+                    <td>{{transaccion.tasaConversion}}</td>
+                    <td>{{transaccion.emailCliente}}</td>
+                </tr>
+            </ng-container>
+
+            <ng-container *ngIf="transacciones.length == 0">
+                <tr>
+                    <td colspan="6" class="text-center">Aún no hay transacciones guardadas</td>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
+</div>
+
+<div class="container col-8 mx-auto my-3" *ngIf="option2Form == true && display == true">
+    <form #filtroForm="ngForm">
+        <div class="mb-3">
+            <label for="options" class="form-label">Moneda Origen</label>
+            <select class="form-select" aria-label="Default select example" [(ngModel)]="divisaOrigen"
+                 class="form-select" name="origen" id="origen" #origen="ngModel"
+                required>
+                <option value="ARS">ARS</option>
+                <option value="USD">USD</option>
+                <option value="EUR">EUR</option>
+            </select>
+
+            <div *ngIf="origen.invalid" class="alert-danger my-1 p-1">
+                <div *ngIf="origen.errors?.['required']">
+                    Por favor seleccione una moneda de origen
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="destino" class="form-label">Moneda Destino</label>
+            <select class="form-select" aria-label="Default select example" [(ngModel)]="divisaDestino"
+                 class="form-select" name="destino" id="destino" #destino="ngModel"
+                required>
+                <option value="ARS">ARS</option>
+                <option value="USD">USD</option>
+                <option value="EUR">EUR</option>
+            </select>
+
+            <div *ngIf="destino.invalid" class="alert-danger my-1 p-1">
+                <div *ngIf="destino.errors?.['required']">
+                    Por favor seleccione una moneda de destino
+                </div>
+            </div>
+        </div>
+
+        <div class="d-grid gap-2">
+            <div class="d-grid gap-2">
+                <button type="button" class="btn btn-primary" (click)="recuperarFiltro()"
+                    [disabled]="!filtroForm.valid">Guardar</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="table-responsive" *ngIf="option2 == true && display == true">
+    <br>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Cantidad Origen</th>
+                <th scope="col">Moneda Origen</th>
+                <th scope="col">Cantidad Destino</th>
+                <th scope="col">Moneda Destino</th>
+                <th scope="col">Tasa Conversion</th>
+                <th scope="col">Email Cliente</th>
+            </tr>
+        </thead>
+        <tbody>
+            <ng-container *ngIf="transacciones.length != 0">
+                <tr *ngFor="let transaccion of transacciones">
+                    <td>{{transaccion.cantidadOrigen}}</td>
+                    <td>{{transaccion.monedaOrigen}}</td>
+                    <td>{{transaccion.cantidadDestino}}</td>
+                    <td>{{transaccion.monedaDestino}}</td>
+                    <td>{{transaccion.tasaConversion}}</td>
+                    <td>{{transaccion.emailCliente}}</td>
+                </tr>
+            </ng-container>
+
+            <ng-container *ngIf="transacciones.length == 0">
+                <tr>
+                    <td colspan="6" class="text-center">Aún no hay transacciones guardadas</td>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
+</div>
